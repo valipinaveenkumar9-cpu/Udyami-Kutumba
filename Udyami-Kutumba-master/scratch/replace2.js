@@ -1,0 +1,14 @@
+const fs = require('fs');
+let text = fs.readFileSync('lib/features/dashboard/presentation/dashboard_screen.dart', 'utf-8');
+text = text.replace(/\\\$_primeCount/g, '$_primeCount');
+text = text.replace(/\\\$_basicCount/g, '$_basicCount');
+text = text.replace(/\\\$_freeCount/g, '$_freeCount');
+text = text.replace(/\\\$_activeTalukas/g, '$_activeTalukas');
+text = text.replace(/\\\$_appointedChairmen/g, '$_appointedChairmen');
+text = text.replace(/\\\$_channelPartners/g, '$_channelPartners');
+text = text.replace(/\\\$_wardsCount/g, '$_wardsCount');
+text = text.replace(/\\\$_stateName/g, '$_stateName');
+text = text.replace(/\\\$_districtName/g, '$_districtName');
+text = text.replace(/\\\$_talukaName/g, '$_talukaName');
+text = text.replace(/\\\$_activeTab/g, '$_activeTab');
+fs.writeFileSync('lib/features/dashboard/presentation/dashboard_screen.dart', text, 'utf-8');

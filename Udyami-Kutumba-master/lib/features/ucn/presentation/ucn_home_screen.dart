@@ -1,0 +1,997 @@
+import 'package:flutter/material.dart';
+import '../../../core/api/profile/profile_api.dart';
+
+import '../../directory/presentation/directory_screen.dart';
+import '../ucnsubscreens/appreciation_screen.dart';
+import '../ucnsubscreens/face_to_face_invite_screen.dart';
+import '../ucnsubscreens/face_to_face_screen.dart';
+import '../ucnsubscreens/gratitude_history_screen.dart';
+import '../ucnsubscreens/gratitude_screen.dart';
+import '../ucnsubscreens/guests_history_screen.dart';
+import '../ucnsubscreens/guests_screen.dart';
+import '../ucnsubscreens/leader_board_screen.dart';
+import '../ucnsubscreens/meetings_screen.dart';
+import '../ucnsubscreens/my_leads_screen.dart';
+import '../ucnsubscreens/passleadscreen.dart';
+import '../ucnsubscreens/score_card_screen.dart';
+import '../ucnsubscreens/invite_to_ucn_screen.dart';
+import '../ucnsubscreens/sector_team_screen.dart';
+import '../ucnsubscreens/uc_training_screen.dart';
+import '../ucnsubscreens/sector_dashboard_screen.dart';
+import '../ucnsubscreens/tag_overlap_screen.dart';
+import '../ucnsubscreens/circle_console_screen.dart';
+import '../ucnsubscreens/assembly_console_screen.dart';
+import '../ucnsubscreens/circle_ucn_members_screen.dart';
+import '../ucnsubscreens/assembly_roles_screen.dart';
+import '../ucnsubscreens/sector_join_review_screen.dart';
+import '../ucnsubscreens/create_sector_request_screen.dart';
+import '../ucnsubscreens/my_sector_requests_screen.dart';
+import '../ucnsubscreens/scan_attendance_qr_screen.dart';
+import '../ucnsubscreens/apply_membership_screen.dart';
+import '../ucnsubscreens/ucn_subscription_screen.dart';
+import '../ucnsubscreens/assembly_ucn_members_screen.dart';
+import '../ucnsubscreens/assembly_scorecard_screen.dart';
+import '../ucnsubscreens/assembly_leaderboard_screen.dart';
+import '../ucnsubscreens/score_card_screen.dart';
+import '../ucnsubscreens/invite_to_ucn_screen.dart';
+import '../../../core/utils/session_manager.dart';
+import '../../../core/models/user_model.dart';
+
+class UcnHomeScreen extends StatefulWidget {
+  const UcnHomeScreen({super.key});
+
+  @override
+  State<UcnHomeScreen> createState() => _UcnHomeScreenState();
+}
+
+class _UcnHomeScreenState extends State<UcnHomeScreen> {
+  String _selectedRole = 'Member';
+  bool _isPrime = false;
+  final ProfileAPI _profileAPI = ProfileAPI();
+  String _assemblyName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _determineRole();
+    _fetchProfile();
+    SessionManager.profileUpdateNotifier.addListener(_determineRole);
+  }
+
+  Future<void> _fetchProfile() async {
+    final user = SessionManager.user;
+    if (user != null) {
+      final userId = user['userId'] ?? user['memberId'];
+      if (userId != null) {
+        try {
+          final response = await _profileAPI.getUserProfileById(userId);
+          if (response != null && response['success'] == true) {
+            final profileData = response['data']['user']['profile'];
+            if (profileData != null && profileData['assembly'] != null && profileData['assembly'].toString().isNotEmpty) {
+              if (mounted) {
+                setState(() {
+                  String fetchedName = profileData['assembly'].toString();
+                  fetchedName = fetchedName.replaceAll(RegExp(r'\s*Assembly\s*', caseSensitive: false), '').trim();
+                  _assemblyName = fetchedName.isNotEmpty ? fetchedName : '';
+                });
+              }
+            }
+          }
+        } catch (e) {
+          print('DEV DEBUG - UcnHomeScreen: Failed to fetch profile: $e');
+        }
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    SessionManager.profileUpdateNotifier.removeListener(_determineRole);
+    super.dispose();
+  }
+
+  void _determineRole() {
+    final user = SessionManager.user;
+    if (user != null) {
+      final userModel = UserModel.fromJson(user);
+
+      print('DEV DEBUG - UcnHomeScreen: Current user roles:');
+      for (var r in userModel.roles) {
+        print(' - ID: ${r.roleId}, roleName: ${r.roleName}, role: ${r.role}');
+      }
+
+      bool isTalukaHead = userModel.roles.any((r) {
+        final rName = (r.roleName.isNotEmpty ? r.roleName : (r.role ?? '')).toLowerCase();
+        return rName.contains('taluka_head') || rName.contains('taluk head') || rName.contains('taluka_president');
+      }) || userModel.name.toLowerCase().contains('taluk head');
+
+      bool isSuperAdmin = userModel.roles.any((r) {
+        final rName = (r.roleName.isNotEmpty ? r.roleName : (r.role ?? '')).toLowerCase();
+        return rName == 'superadmin' || rName == 'super_admin' || rName == 'state_head';
+      });
+
+      bool isAssemblyPresident = isSuperAdmin || userModel.roles.any((r) {
+        final rName = (r.roleName.isNotEmpty ? r.roleName : (r.role ?? '')).toLowerCase();
+        return rName.contains('assembly_head') || 
+               rName.contains('assembly head') || 
+               rName.contains('assembly_president') || 
+               rName.contains('assembly president') ||
+               rName.contains('assembly_vice_president') ||
+               rName.contains('assembly vice president') ||
+               rName.contains('assembly_treasurer') ||
+               rName.contains('assembly treasurer') ||
+               rName.contains('assembly_general_secretary') ||
+               rName.contains('assembly general secretary') ||
+               rName.contains('assembly_secretary') ||
+               rName.contains('assembly secretary');
+      }) || userModel.name.toLowerCase().contains('assembly head') || userModel.name.toLowerCase().contains('assembly president');
+
+      bool isCircleLeader = userModel.roles.any((r) {
+        final rName = (r.roleName.isNotEmpty ? r.roleName : (r.role ?? '')).toLowerCase();
+        return (rName.contains('circle_leader') || rName.contains('president') || rName.contains('vice-president') || rName.contains('treasury') || rName.contains('secretary') || rName.contains('chairman') || rName.contains('head')) && !(rName.contains('assembly') || rName.contains('taluka'));
+      }) || userModel.name.toLowerCase().contains('circle leader') || (userModel.name.toLowerCase().contains('president') && !userModel.name.toLowerCase().contains('assembly'));
+
+      bool isSectorHead = userModel.roles.any((r) {
+        final rName = (r.roleName.isNotEmpty ? r.roleName : (r.role ?? '')).toLowerCase();
+        return rName.contains('sector_head') || rName.contains('sector head');
+      }) || userModel.name.toLowerCase().contains('sector head');
+
+      setState(() {
+        _isPrime = userModel.isPrime == true;
+
+        if (isAssemblyPresident) {
+          _selectedRole = 'Assembly President';
+        } else if (isTalukaHead) {
+          _selectedRole = 'Taluka Head';
+        } else if (isCircleLeader) {
+          _selectedRole = 'Circle Leader';
+        } else if (isSectorHead) {
+          _selectedRole = 'Sector Head';
+        } else {
+          _selectedRole = 'Member';
+        }
+      });
+
+      print('DEV DEBUG - UcnHomeScreen: _selectedRole evaluated to: $_selectedRole');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isPrime && _selectedRole == 'Member') {
+      return _buildJoinPrimeUI(context);
+    }
+    return _buildPrimeDashboard(context);
+  }
+
+  Widget _buildJoinPrimeUI(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.7,
+      alignment: Alignment.center,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.teal.shade900,
+              Colors.teal.shade700,
+              Colors.teal.shade500,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.teal.withValues(alpha: 0.3),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.workspace_premium_rounded,
+                color: Colors.amberAccent,
+                size: 80,
+              ),
+            ),
+            const SizedBox(height: 30),
+            const Text(
+              "Unlock Udyami Circle Network",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.5,
+              ),
+            ),
+            const SizedBox(height: 15),
+            const Text(
+              "Join UCN to access the exclusive dashboard, track your leads, manage face-to-face meetings, and connect with other visionary entrepreneurs.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 15,
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const UcnSubscriptionScreen()),
+                  );
+                },
+                icon: const Icon(Icons.workspace_premium_rounded),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amberAccent,
+                  foregroundColor: Colors.teal.shade900,
+                  elevation: 10,
+                  shadowColor: Colors.amberAccent.withValues(alpha: 0.5),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                label: const Text(
+                  "Subscribe for UCN Membership",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              "Upgrade your membership to unlock premium features",
+              style: TextStyle(
+                color: Colors.white60,
+                fontSize: 13,
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrimeDashboard(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Row(
+        //   children: [
+        //     Container(
+        //       padding: const EdgeInsets.all(7),
+        //       decoration: BoxDecoration(
+        //         color: Colors.teal.withAlpha(30),
+        //         shape: BoxShape.circle,
+        //       ),
+        //       child: const Icon(
+        //         Icons.groups_rounded,
+        //         color: Colors.teal,
+        //         size: 20,
+        //       ),
+        //     ),
+        //     const SizedBox(width: 8),
+        //     // Column(
+        //     //   crossAxisAlignment: CrossAxisAlignment.start,
+        //     //   children: const [
+        //     //     Text(
+        //     //       "Namma UCN",
+        //     //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        //     //     ),
+        //     //     Text(
+        //     //       "Nikhil K · G5 Malleshwaram Circle",
+        //     //       style: TextStyle(fontSize: 12, color: Colors.grey),
+        //     //     ),
+        //     //   ],
+        //     // ),
+        //     // const Spacer(),
+        //     Container(
+        //       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        //       decoration: BoxDecoration(
+        //         color: Colors.teal.withAlpha(20),
+        //         borderRadius: BorderRadius.circular(20),
+        //         border: Border.all(color: Colors.teal.withAlpha(50)),
+        //       ),
+        //       child: Text(
+        //         _selectedRole,
+        //         style: const TextStyle(
+        //           color: Colors.teal,
+        //           fontWeight: FontWeight.bold,
+        //           fontSize: 12,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        //
+        // const SizedBox(height: 12),
+        //
+        // Container(
+        //   padding: const EdgeInsets.all(16),
+        //   decoration: BoxDecoration(
+        //     color: Colors.teal,
+        //     borderRadius: BorderRadius.circular(15),
+        //   ),
+        //   child: Row(
+        //     children: [
+        //       const Icon(Icons.calendar_month, color: Colors.white),
+        //       const SizedBox(width: 15),
+        //       Expanded(
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: const [
+        //             Text(
+        //               "Circle Meeting · Thu 7:30 AM",
+        //               style: TextStyle(
+        //                 color: Colors.white,
+        //                 fontWeight: FontWeight.bold,
+        //               ),
+        //             ),
+        //             SizedBox(height: 5),
+        //             Text(
+        //               "Taluka Hall · Tap to RSVP",
+        //               style: TextStyle(color: Colors.white70),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       const Icon(
+        //         Icons.arrow_forward_ios,
+        //         color: Colors.white,
+        //         size: 18,
+        //       ),
+        //     ],
+        //   ),
+        // ),
+
+        // if (_selectedRole == 'Sector Head') ...[
+        //   const SizedBox(height: 12),
+        //   InkWell(
+        //     onTap: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (_) => const SectorDashboardScreen()),
+        //       );
+        //     },
+        //     child: Container(
+        //       padding: const EdgeInsets.all(16),
+        //       decoration: BoxDecoration(
+        //         color: const Color(0xFFFF7F50), // Coral
+        //         borderRadius: BorderRadius.circular(15),
+        //       ),
+        //       child: Row(
+        //         children: [
+        //           const Icon(Icons.track_changes_rounded, color: Colors.white),
+        //           const SizedBox(width: 15),
+        //           Expanded(
+        //             child: Column(
+        //               crossAxisAlignment: CrossAxisAlignment.start,
+        //               children: const [
+        //                 Text(
+        //                   "Sector head · Construction & Real Estate",
+        //                   style: TextStyle(
+        //                     color: Colors.white,
+        //                     fontWeight: FontWeight.bold,
+        //                   ),
+        //                 ),
+        //                 SizedBox(height: 5),
+        //                 Text(
+        //                   "1 join to review · 3 open tag seats",
+        //                   style: TextStyle(color: Color(0xFF5D2417), fontSize: 12),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           const Icon(
+        //             Icons.arrow_forward_ios,
+        //             color: Colors.white,
+        //             size: 18,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ],
+        //
+        // if (_selectedRole == 'Circle Leader') ...[
+        //   const SizedBox(height: 12),
+        //   InkWell(
+        //     onTap: () {
+        //       Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (_) => const CircleConsoleScreen()),
+        //       );
+        //     },
+        //     child: Container(
+        //       padding: const EdgeInsets.all(16),
+        //       decoration: BoxDecoration(
+        //         color: const Color(0xFFFF7F50), // Coral
+        //         borderRadius: BorderRadius.circular(12),
+        //       ),
+        //       child: Row(
+        //         children: [
+        //           const Icon(Icons.shield_rounded, color: Colors.white),
+        //           const SizedBox(width: 12),
+        //           Expanded(
+        //             child: Column(
+        //               crossAxisAlignment: CrossAxisAlignment.start,
+        //               children: const [
+        //                 Text(
+        //                   "Chairman · G5 Malleshwaram circle",
+        //                   style: TextStyle(
+        //                     color: Colors.white,
+        //                     fontWeight: FontWeight.bold,
+        //                   ),
+        //                 ),
+        //                 SizedBox(height: 5),
+        //                 Text(
+        //                   "2 applications · 1 lead appeal need you",
+        //                   style: TextStyle(color: Color(0xFF5D2417), fontSize: 12),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           const Icon(
+        //             Icons.arrow_forward_ios,
+        //             color: Colors.white,
+        //             size: 18,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ],
+
+        if (_selectedRole == 'Taluka Head') ...[
+          const SizedBox(height: 16),
+          const Text("Taluka Head", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 13)),
+          const SizedBox(height: 8),
+          GridView.count(
+            padding: EdgeInsets.zero,
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.15,
+            children: [
+              DashboardTile(
+                icon: Icons.admin_panel_settings_rounded,
+                title: "Taluka Roles",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const AssemblyRolesScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+
+        if (_selectedRole == 'Assembly President') ...[
+          const SizedBox(height: 16),
+          const Text("President", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 13)),
+          const SizedBox(height: 8),
+          GridView.count(
+            padding: EdgeInsets.zero,
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.15,
+            children: [
+              DashboardTile(
+                icon: Icons.admin_panel_settings_rounded,
+                title: "Console",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AssemblyConsoleScreen(assemblyName: _assemblyName)),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.admin_panel_settings_rounded,
+                title: "Roles",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AssemblyRolesScreen(assemblyName: _assemblyName)),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.groups_rounded,
+                title: "Members",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AssemblyUcnMembersScreen(assemblyName: _assemblyName)),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.assessment,
+                title: "Scorecard",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AssemblyScorecardScreen(assemblyName: _assemblyName)),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.leaderboard,
+                title: "Leaderboard",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AssemblyLeaderboardScreen(assemblyName: _assemblyName)),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+
+        if (_selectedRole == 'Circle Leader') ...[
+          const SizedBox(height: 16),
+          const Text("President", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 13)),
+          const SizedBox(height: 8),
+          GridView.count(
+            padding: EdgeInsets.zero,
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.15,
+            children: [
+              DashboardTile(
+                icon: Icons.admin_panel_settings_rounded,
+                title: "Console",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CircleConsoleScreen()),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.groups_rounded,
+                title: "Members",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CircleUcnMembersScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+
+        if (_selectedRole == 'Sector Head') ...[
+          const SizedBox(height: 16),
+          const Text("Sector Head", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 13)),
+          const SizedBox(height: 8),
+          GridView.count(
+            padding: EdgeInsets.zero,
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 1.15,
+            children: [
+              DashboardTile(
+                icon: Icons.dashboard_customize_rounded,
+                title: "Sector Dashboard",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SectorDashboardScreen()),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.tag_rounded,
+                title: "Tag Overlap",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const TagOverlapScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+
+        const SizedBox(height: 16),
+        const Text("Everyone", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 13)),
+        const SizedBox(height: 8),
+
+        GridView.count(
+          padding: EdgeInsets.zero,
+          crossAxisCount: 3,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+          childAspectRatio: 1.15,
+          children: [
+            DashboardTile(
+              icon: Icons.send,
+              title: "Pass a Lead",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PassLeadScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.list_alt,
+              title: "My Leads",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MyLeadsScreen()),
+                );
+              },
+            ),
+            if (_selectedRole == 'Member') ...[
+              DashboardTile(
+                icon: Icons.people,
+                title: "Face to Face",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const FaceToFaceInviteScreen()),
+                  );
+                },
+              ),
+              DashboardTile(
+                icon: Icons.list_alt,
+                title: "My FtoF",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const FaceToFaceScreen()),
+                  );
+                },
+              ),
+            ],
+            DashboardTile(
+              icon: Icons.person_add,
+              title: "Guests",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const GuestsScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.list_alt,
+              title: "My Guests",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const GuestsHistoryScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.currency_rupee,
+              title: "Gratitude",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const GratitudeScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.list_alt,
+              title: "My Gratitudes",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const GratitudeHistoryScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.star,
+              title: "Appreciations",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AppreciationScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.school,
+              title: "UC Training",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const UCTrainingScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.calendar_today,
+              title: "Circle Meetings",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => MeetingsScreen(userRole: _selectedRole)),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.qr_code_scanner,
+              title: "Scan Attendance",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ScanAttendanceQrScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.groups,
+              title: "SectorTeam",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SectorTeamScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.bar_chart,
+              title: "Scorecard",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ScoreCardScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.contact_page,
+              title: "Directory",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const DirectoryScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.leaderboard,
+              title: "Leaderboard",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LeaderBoardScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.add_business_rounded,
+              title: "Join Sector",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const CreateSectorRequestScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.history_edu_rounded,
+              title: "Sector Req.",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MySectorRequestsScreen()),
+                );
+              },
+            ),
+            DashboardTile(
+              icon: Icons.person_add_alt_1_rounded,
+              title: "Invite to UCN",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const InviteToUcnScreen()),
+                );
+              },
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 20),
+
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: Container(
+        //         padding: const EdgeInsets.all(12),
+        //         decoration: BoxDecoration(
+        //           color: Theme.of(context).colorScheme.surface,
+        //           borderRadius: BorderRadius.circular(15),
+        //           boxShadow: [
+        //             BoxShadow(
+        //               color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : Colors.grey.shade200,
+        //               blurRadius: 6,
+        //               offset: const Offset(0, 3),
+        //             ),
+        //           ],
+        //         ),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: const [
+        //             FittedBox(
+        //               fit: BoxFit.scaleDown,
+        //               child: Text(
+        //                 "Pending on you",
+        //                 style: TextStyle(color: Colors.grey),
+        //               ),
+        //             ),
+        //             SizedBox(height: 8),
+        //             FittedBox(
+        //               fit: BoxFit.scaleDown,
+        //               child: Text(
+        //                 "2 Leads",
+        //                 style: TextStyle(
+        //                   fontSize: 18,
+        //                   fontWeight: FontWeight.bold,
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //     const SizedBox(width: 14),
+        //     Expanded(
+        //       child: Container(
+        //         padding: const EdgeInsets.all(12),
+        //         decoration: BoxDecoration(
+        //           color: Theme.of(context).colorScheme.surface,
+        //           borderRadius: BorderRadius.circular(15),
+        //           boxShadow: [
+        //             BoxShadow(
+        //               color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : Colors.grey.shade200,
+        //               blurRadius: 6,
+        //               offset: const Offset(0, 3),
+        //             ),
+        //           ],
+        //         ),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: const [
+        //             FittedBox(
+        //               fit: BoxFit.scaleDown,
+        //               child: Text("Score · Q2", style: TextStyle(color: Colors.grey)),
+        //             ),
+        //             SizedBox(height: 8),
+        //             FittedBox(
+        //               fit: BoxFit.scaleDown,
+        //               child: Text(
+        //                 "48 · Green",
+        //                 style: TextStyle(
+        //                   color: Colors.green,
+        //                   fontWeight: FontWeight.bold,
+        //                   fontSize: 18,
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+
+        // const SizedBox(height: 16),
+        //
+        // const Center(
+        //   child: Text(
+        //     "Tap 'More' for every feature · tiles adapt to your role",
+        //     style: TextStyle(color: Colors.grey, fontSize: 12),
+        //     textAlign: TextAlign.center,
+        //   ),
+        // ),
+      ],
+    );
+  }
+}
+
+class DashboardTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  const DashboardTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.transparent : Colors.grey.shade200,
+              blurRadius: 5,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundColor: Colors.teal.withAlpha(26),
+                child: Icon(icon, color: Colors.teal),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+

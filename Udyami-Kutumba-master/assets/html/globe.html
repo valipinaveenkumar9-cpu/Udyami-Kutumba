@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Globe</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #0B0F1A; overflow: hidden; }
+    #globeViz { width: 100vw; height: 100vh; }
+  </style>
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+  <div id="globeViz"></div>
+
+  <script>
+    const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    function lerpLng(from, to, t) {
+      let diff = to - from;
+      if (diff > 180) diff -= 360;
+      if (diff < -180) diff += 360;
+      return from + diff * t;
+    }
+
+    const world = Globe()
+      (document.getElementById('globeViz'))
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+      .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+      .atmosphereColor('#4A6FC9')
+      .atmosphereAltitude(0.18)
+      .pointOfView({ lat: 20, lng: 78, altitude: 2.2 }, 0); // Start high up over India
+
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 0.6;
+    world.controls().enableZoom = false;
+    world.controls().enablePan = false;
+
+    // Called from Flutter
+    window.flyTo = function(lat, lng) {
+      world.controls().autoRotate = false;
+      
+      const current = world.pointOfView();
+      const start = { ...current };
+      const end = { lat: lat, lng: lng, altitude: 0.08 }; // Very zoomed in
+      const peakAltitude = Math.max(start.altitude, 2.5);
+      const duration = 3000;
+      const startTime = performance.now();
+
+      const step = (now) => {
+        const t = Math.min((now - startTime) / duration, 1);
+        const eased = easeInOutCubic(t);
+
+        const currentLat = start.lat + (end.lat - start.lat) * eased;
+        const currentLng = lerpLng(start.lng, end.lng, eased);
+        const altitude =
+          t < 0.5
+            ? start.altitude + (peakAltitude - start.altitude) * (t / 0.5)
+            : peakAltitude + (end.altitude - peakAltitude) * ((t - 0.5) / 0.5);
+
+        world.pointOfView({ lat: currentLat, lng: currentLng, altitude: altitude }, 0);
+
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          // Send message back to Flutter
+          if (window.GlobeChannel) {
+            window.GlobeChannel.postMessage('arrived');
+          }
+        }
+      };
+
+      requestAnimationFrame(step);
+    }
+  </script>
+</body>
+</html>

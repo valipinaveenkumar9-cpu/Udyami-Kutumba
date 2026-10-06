@@ -1,0 +1,136 @@
+import '../models/social_channel_model.dart';
+
+class SocialChannelsData {
+  static const List<SocialChannel> defaultChannels = [
+    SocialChannel(
+      id: 'uk_wa_official',
+      title: 'Udyami Kutumba Official Channel',
+      description:
+          'Get the latest official government scheme updates, MSME notifications, funding opportunities, and community news.',
+      platform: SocialPlatform.whatsApp,
+      category: 'Official Announcements',
+      url: 'https://whatsapp.com/channel/0029Va4UdyaKutumba',
+      memberCount: '38.5K Followers',
+      isOfficial: true,
+      isFeatured: true,
+      tags: ['Official', 'Announcements', 'MSME', 'Updates'],
+    ),
+    SocialChannel(
+      id: 'uk_tg_broadcast',
+      title: 'Udyami Kutumba Broadcast',
+      description:
+          'Real-time alerts, scheme application PDFs, daily market insights, business circulars, and instant resource downloads.',
+      platform: SocialPlatform.telegram,
+      category: 'Official Announcements',
+      url: 'https://t.me/udyamikutumba',
+      memberCount: '19.8K Subscribers',
+      isOfficial: true,
+      isFeatured: true,
+      tags: ['Broadcast', 'Alerts', 'PDFs', 'Schemes'],
+    ),
+    SocialChannel(
+      id: 'uk_yt_academy',
+      title: 'Udyami Kutumba Academy',
+      description:
+          'Watch free entrepreneur workshops, financial literacy webinars, expert interviews, and inspiring member journey stories.',
+      platform: SocialPlatform.youtube,
+      category: 'Training & Webinars',
+      url: 'https://youtube.com/@udyamikutumba',
+      memberCount: '46.2K Subscribers',
+      isOfficial: true,
+      isFeatured: true,
+      tags: ['Videos', 'Webinars', 'Training', 'Workshops'],
+    ),
+    SocialChannel(
+      id: 'uk_uqueens_wa',
+      title: 'uQueens Women Entrepreneurs Circle',
+      description:
+          'Exclusive networking forum and peer support for women entrepreneurs, homemaker micro-businesses, and leaders.',
+      platform: SocialPlatform.whatsApp,
+      category: 'Women Entrepreneurs',
+      url: 'https://chat.whatsapp.com/uQueensCommunity',
+      memberCount: '8.4K Members',
+      isOfficial: true,
+      isFeatured: true,
+      tags: ['uQueens', 'Women Entrepreneurs', 'Mentorship'],
+    ),
+    SocialChannel(
+      id: 'uk_trade_leads_tg',
+      title: 'MSME Trade & Lead Exchange',
+      description:
+          'Daily B2B leads, raw material inquiries, supplier connections, and buy-sell opportunities across Karnataka and India.',
+      platform: SocialPlatform.telegram,
+      category: 'Business Networking',
+      url: 'https://t.me/udyamileads',
+      memberCount: '15.3K Members',
+      isOfficial: true,
+      isFeatured: false,
+      tags: ['B2B', 'Leads', 'Suppliers', 'Deals'],
+    ),
+    SocialChannel(
+      id: 'uk_ig_official',
+      title: '@udyamikutumba on Instagram',
+      description:
+          'Daily entrepreneur spotlights, reel tips for small business growth, event updates, awards, and community celebrations.',
+      platform: SocialPlatform.instagram,
+      category: 'Community & Highlights',
+      url: 'https://instagram.com/udyamikutumba',
+      memberCount: '24.1K Followers',
+      isOfficial: true,
+      isFeatured: false,
+      tags: ['Spotlights', 'Reels', 'Events', 'Visuals'],
+    ),
+    SocialChannel(
+      id: 'uk_li_network',
+      title: 'Udyami Kutumba Professional Network',
+      description:
+          'B2B partnerships, corporate collaborations, policy discussions, and professional career & leadership connections.',
+      platform: SocialPlatform.linkedIn,
+      category: 'Business Networking',
+      url: 'https://linkedin.com/company/udyamikutumba',
+      memberCount: '16.7K Followers',
+      isOfficial: true,
+      isFeatured: false,
+      tags: ['LinkedIn', 'B2B', 'Partnerships', 'Industry'],
+    ),
+    SocialChannel(
+      id: 'uk_fb_community',
+      title: 'Udyami Kutumba Community Group',
+      description:
+          'Active discussion group for members to ask queries, share business achievements, collaborate, and support local ventures.',
+      platform: SocialPlatform.facebook,
+      category: 'Community Discussion',
+      url: 'https://facebook.com/groups/udyamikutumba',
+      memberCount: '31.2K Members',
+      isOfficial: true,
+      isFeatured: false,
+      tags: ['Community', 'Discussion', 'Support', 'Local'],
+    ),
+    SocialChannel(
+      id: 'uk_leaders_wa',
+      title: 'Coordinators & Circle Leaders Hub',
+      description:
+          'Dedicated communication channel for UCN coordinators, taluk coordinators, ward heads, and circle leaders.',
+      platform: SocialPlatform.whatsApp,
+      category: 'Leadership & Circles',
+      url: 'https://chat.whatsapp.com/udyamileaders',
+      memberCount: '3.6K Members',
+      isOfficial: true,
+      isFeatured: false,
+      tags: ['Coordinators', 'Ward', 'Leadership', 'UCN'],
+    ),
+    SocialChannel(
+      id: 'uk_x_official',
+      title: 'Udyami Kutumba Official on X',
+      description:
+          'Real-time alerts, quick announcements, press releases, and direct interactions with government bodies and leaders.',
+      platform: SocialPlatform.twitter,
+      category: 'News & Alerts',
+      url: 'https://x.com/udyamikutumba',
+      memberCount: '10.9K Followers',
+      isOfficial: true,
+      isFeatured: false,
+      tags: ['News', 'Alerts', 'Realtime', 'Press'],
+    ),
+  ];
+}

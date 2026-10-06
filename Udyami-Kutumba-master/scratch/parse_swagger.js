@@ -1,0 +1,1 @@
+const fs = require('fs'); const data = JSON.parse(fs.readFileSync('swagger.json')); for (const [path, methods] of Object.entries(data.paths)) { for (const [method, details] of Object.entries(methods)) { if (details.tags && details.tags.includes('Udyamimngt')) { console.log(method.toUpperCase() + ' ' + path); } } }

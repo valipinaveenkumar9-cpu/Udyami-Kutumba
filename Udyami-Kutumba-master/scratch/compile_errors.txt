@@ -1,0 +1,245 @@
+lib/core/utils/ward_chart_pdf_generator.dart:112:50: Error: Undefined name 'context'.
+      final cardBgColor = assigned ? PdfTheme.of(context).colorScheme.surface : _cardBg;
+lib/core/utils/ward_chart_pdf_generator.dart:142:47: Error: Undefined name 'context'.
+                color: assigned ? PdfTheme.of(context).colorScheme.onSurface : borderColor,
+lib/core/utils/ward_chart_pdf_generator.dart:181:127: Error: Undefined name 'context'.
+                pw.Text('UDYAMI BHARAT', style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:189:103: Error: Undefined name 'context'.
+                  style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:208:67: Error: Undefined name 'context'.
+              style: pw.TextStyle(fontSize: 6, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:209:129: Error: Undefined name 'context'.
+          pw.Text('PAGE 0$pageNum OF 05', style: pw.TextStyle(fontSize: 6.5, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:221:99: Error: Undefined name 'context'.
+            style: pw.TextStyle(fontSize: 9.5, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:232:28: Error: Undefined name 'context'.
+        color: PdfTheme.of(context).colorScheme.surface,
+lib/core/utils/ward_chart_pdf_generator.dart:257:104: Error: Undefined name 'context'.
+                  style: pw.TextStyle(fontSize: 26, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:275:72: Error: Undefined name 'context'.
+                  style: pw.TextStyle(fontSize: 15, color: PdfTheme.of(context).colorScheme.surface, fontWeight: pw.FontWeight.bold)),
+lib/core/utils/ward_chart_pdf_generator.dart:315:74: Error: Undefined name 'context'.
+                      photoBox('mla', size: 40, borderColor: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:319:111: Error: Undefined name 'context'.
+                        style: pw.TextStyle(fontSize: 9.5, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:325:79: Error: Undefined name 'context'.
+                        style: pw.TextStyle(fontSize: 7.0, color: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:356:140: Error: Undefined name 'context'.
+                    child: pw.Text('UDYAMI PATRON', style: pw.TextStyle(fontSize: 10.5, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:483:30: Error: Undefined name 'context'.
+          color: PdfTheme.of(context).colorScheme.surface,
+lib/core/utils/ward_chart_pdf_generator.dart:522:123: Error: Undefined name 'context'.
+                  pw.Text('CHAIRMAN', style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:524:80: Error: Undefined name 'context'.
+                  photoBox('ward-chairman', size: 36, borderColor: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:530:105: Error: Undefined name 'context'.
+                    style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:538:67: Error: Undefined name 'context'.
+            pw.Container(width: 1, height: 98, color: PdfTheme.of(context).colorScheme.surface, margin: const pw.EdgeInsets.symmetric(horizontal: 4)),
+lib/core/utils/ward_chart_pdf_generator.dart:561:148: Error: Undefined name 'context'.
+                          pw.Text(entry.value.toUpperCase(), style: pw.TextStyle(fontSize: 7.5, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface), textAlign: pw.TextAlign.center),
+lib/core/utils/ward_chart_pdf_generator.dart:563:82: Error: Undefined name 'context'.
+                          photoBox(entry.key, size: 34, borderColor: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:567:115: Error: Undefined name 'context'.
+                            style: pw.TextStyle(fontSize: 7.5, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:573:83: Error: Undefined name 'context'.
+                            style: pw.TextStyle(fontSize: 5.5, color: PdfTheme.of(context).colorScheme.surface),
+lib/core/utils/ward_chart_pdf_generator.dart:608:136: Error: Undefined name 'context'.
+                  pw.Text('ECONOMIC SECTORS (12)', style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:625:61: Error: Undefined name 'context'.
+                              color: assigned ? PdfTheme.of(context).colorScheme.surface : _lightNavy,
+lib/core/utils/ward_chart_pdf_generator.dart:636:166: Error: Undefined name 'context'.
+                                  style: pw.TextStyle(fontSize: 6.0, fontWeight: assigned ? pw.FontWeight.bold : pw.FontWeight.normal, color: assigned ? PdfTheme.of(context).colorScheme.onSurface : PdfColors.grey600),
+lib/core/utils/ward_chart_pdf_generator.dart:654:38: Error: Undefined name 'context'.
+                  color: PdfTheme.of(context).colorScheme.surface,
+lib/core/utils/ward_chart_pdf_generator.dart:663:180: Error: Undefined name 'context'.
+                    child: pw.Text('Udyami Management System', textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 7, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface)),
+lib/core/utils/ward_chart_pdf_generator.dart:679:72: Error: Undefined name 'context'.
+                            color: assigned ? _lightNavy : PdfTheme.of(context).colorScheme.surface,
+lib/core/utils/ward_chart_pdf_generator.dart:690:98: Error: Undefined name 'context'.
+                                style: pw.TextStyle(fontSize: 5.5, color: assigned ? PdfTheme.of(context).colorScheme.onSurface : PdfColors.grey500),
+lib/core/utils/ward_chart_pdf_generator.dart:755:146: Error: Undefined name 'context'.
+                    child: pw.Center(child: pw.Text(cat[0], style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold, color: PdfTheme.of(context).colorScheme.surface))),
+
+lib/features/cards/presentation/cards_screen.dart:243:53: Error: Not a constant expression.
+                                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.54),
+lib/features/cards/presentation/cards_screen.dart:487:26: Error: The getter 'context' isn't defined for the type '_QrPainter'.
+      ..color = Theme.of(context).colorScheme.onSurface
+
+lib/features/communications/presentation/campaign_detail_screen.dart:296:82: Error: Not a constant expression.
+                                child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2),
+lib/features/communications/presentation/campaign_detail_screen.dart:290:57: Error: The getter 'context' isn't defined for the type 'CampaignDetailScreen'.
+                    ? Icon(Icons.check, color: Theme.of(context).colorScheme.surface, size: 16)
+lib/features/communications/presentation/campaign_detail_screen.dart:292:77: Error: The getter 'context' isn't defined for the type 'CampaignDetailScreen'.
+                        ? Icon(Icons.warning_amber_rounded, color: Theme.of(context).colorScheme.surface, size: 14)
+lib/features/communications/presentation/campaign_detail_screen.dart:321:73: Error: The getter 'context' isn't defined for the type 'CampaignDetailScreen'.
+                      color: isFuture ? Colors.grey.shade400 : Theme.of(context).colorScheme.onSurface,
+lib/features/communications/presentation/campaign_detail_screen.dart:401:25: Error: The getter 'context' isn't defined for the type 'CampaignDetailScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/communications/presentation/campaign_detail_screen.dart:406:29: Error: The getter 'context' isn't defined for the type 'CampaignDetailScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/directory/presentation/member_detail_screen.dart:193:25: Error: The getter 'context' isn't defined for the type 'MemberDetailScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/directory/presentation/member_detail_screen.dart:198:29: Error: The getter 'context' isn't defined for the type 'MemberDetailScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/explore/presentation/explore_screen.dart:240:131: Error: Not a constant expression.
+                  child: Text("Tech Innovators Inc.", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+lib/features/explore/presentation/explore_screen.dart:284:83: Error: The getter 'context' isn't defined for the type '_FeaturedCard'.
+        Text(value, style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+lib/features/explore/presentation/explore_screen.dart:316:95: Error: Not a constant expression.
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+lib/features/explore/presentation/explore_screen.dart:383:124: Error: Not a constant expression.
+                      Text("ABC Technologies", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+lib/features/explore/presentation/explore_screen.dart:510:125: Error: Not a constant expression.
+                      Text("Flutter Developer", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+lib/features/explore/presentation/explore_screen.dart:586:123: Error: Not a constant expression.
+                    Text("Flutter Developer", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+
+lib/features/geofence/presentation/geofence_screen.dart:287:51: Error: Not a constant expression.
+                                  color: Theme.of(context).colorScheme.surface,
+lib/features/geofence/presentation/geofence_screen.dart:431:52: Error: The getter 'context' isn't defined for the type '_MapDummyPainter'.
+      final whitePaint = Paint()..color = Theme.of(context).colorScheme.surface;
+lib/features/geofence/presentation/geofence_screen.dart:439:28: Error: The getter 'context' isn't defined for the type '_MapDummyPainter'.
+        ..color = Theme.of(context).colorScheme.surface
+lib/features/geofence/presentation/geofence_screen.dart:454:42: Error: The getter 'context' isn't defined for the type '_MapDummyPainter'.
+        style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 12, fontWeight: FontWeight.bold),
+lib/features/geofence/presentation/geofence_screen.dart:469:56: Error: The getter 'context' isn't defined for the type '_MapDummyPainter'.
+    canvas.drawRRect(bgRect, Paint()..color = Theme.of(context).colorScheme.onSurface);
+
+lib/features/notifications/presentation/notifications_screen.dart:108:56: Error: Not a constant expression.
+        iconTheme: const IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+
+lib/features/ucn/presentation/ucn_home_screen.dart:239:41: Error: Not a constant expression.
+                        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/presentation/ucn_home_screen.dart:246:56: Error: Not a constant expression.
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+lib/features/ucn/presentation/ucn_home_screen.dart:286:45: Error: Not a constant expression.
+                            color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/presentation/ucn_home_screen.dart:335:45: Error: Not a constant expression.
+                            color: Theme.of(context).colorScheme.surface,
+
+lib/features/ucn/presentation/ucn_screen.dart:680:33: Error: Not a constant expression.
+                color: Theme.of(context).colorScheme.surface,
+
+lib/features/ucn/ucnsubscreens/ai_lead_gen_screen.dart:71:25: Error: The getter 'context' isn't defined for the type 'AiLeadGenScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/ai_lead_gen_screen.dart:75:37: Error: The getter 'context' isn't defined for the type 'AiLeadGenScreen'.
+          BoxShadow(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 4)),
+
+lib/features/ucn/ucnsubscreens/applications_screen.dart:73:27: Error: The getter 'context' isn't defined for the type 'ApplicationsScreen'.
+          color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/applications_screen.dart:78:31: Error: The getter 'context' isn't defined for the type 'ApplicationsScreen'.
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/ucn/ucnsubscreens/attendance_screen.dart:179:25: Error: The getter 'context' isn't defined for the type 'AttendanceScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/attendance_screen.dart:184:29: Error: The getter 'context' isn't defined for the type 'AttendanceScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+lib/features/ucn/ucnsubscreens/attendance_screen.dart:209:27: Error: The getter 'context' isn't defined for the type 'AttendanceScreen'.
+          color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/attendance_screen.dart:214:31: Error: The getter 'context' isn't defined for the type 'AttendanceScreen'.
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/ucn/ucnsubscreens/circle_meeting_agenda_screen.dart:161:128: Error: Not a constant expression.
+                      ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.surface))
+
+lib/features/ucn/ucnsubscreens/circle_roles_screen.dart:102:64: Error: The getter 'context' isn't defined for the type 'CircleRolesScreen'.
+        color: isUnassigned ? Colors.orange.shade50 : Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/circle_roles_screen.dart:108:31: Error: The getter 'context' isn't defined for the type 'CircleRolesScreen'.
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+lib/features/ucn/ucnsubscreens/circle_roles_screen.dart:125:77: Error: The getter 'context' isn't defined for the type 'CircleRolesScreen'.
+                    color: isUnassigned ? Colors.orange.shade900 : Theme.of(context).colorScheme.onSurface,
+lib/features/ucn/ucnsubscreens/circle_roles_screen.dart:166:25: Error: The getter 'context' isn't defined for the type 'CircleRolesScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/circle_roles_screen.dart:171:29: Error: The getter 'context' isn't defined for the type 'CircleRolesScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/ucn/ucnsubscreens/coordinators_screen.dart:55:39: Error: Not a constant expression.
+                      color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/coordinators_screen.dart:128:25: Error: The getter 'context' isn't defined for the type 'CoordinatorsScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/coordinators_screen.dart:133:29: Error: The getter 'context' isn't defined for the type 'CoordinatorsScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+lib/features/ucn/ucnsubscreens/coordinators_screen.dart:156:27: Error: The getter 'context' isn't defined for the type 'CoordinatorsScreen'.
+          color: Theme.of(context).colorScheme.surface,
+
+lib/features/ucn/ucnsubscreens/directory_coordinator_screen.dart:69:25: Error: The getter 'context' isn't defined for the type 'DirectoryCoordinatorScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/directory_coordinator_screen.dart:73:37: Error: The getter 'context' isn't defined for the type 'DirectoryCoordinatorScreen'.
+          BoxShadow(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 4)),
+lib/features/ucn/ucnsubscreens/directory_coordinator_screen.dart:118:25: Error: The getter 'context' isn't defined for the type 'DirectoryCoordinatorScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/directory_coordinator_screen.dart:122:37: Error: The getter 'context' isn't defined for the type 'DirectoryCoordinatorScreen'.
+          BoxShadow(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 4)),
+
+lib/features/ucn/ucnsubscreens/face_to_face_invite_screen.dart:270:110: Error: Not a constant expression.
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2))
+
+lib/features/ucn/ucnsubscreens/gratitude_screen.dart:512:74: Error: Not a constant expression.
+                        child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2),
+
+lib/features/ucn/ucnsubscreens/leader_board_screen.dart:141:50: Error: The getter 'context' isn't defined for the type 'LeaderBoardScreen'.
+        color: selected ? Colors.teal : Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/leader_board_screen.dart:150:38: Error: The getter 'context' isn't defined for the type 'LeaderBoardScreen'.
+          color: selected ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.onSurface,
+lib/features/ucn/ucnsubscreens/leader_board_screen.dart:170:25: Error: The getter 'context' isn't defined for the type 'LeaderBoardScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/leader_board_screen.dart:178:29: Error: The getter 'context' isn't defined for the type 'LeaderBoardScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+lib/features/ucn/ucnsubscreens/leader_board_screen.dart:241:45: Error: The getter 'context' isn't defined for the type 'LeaderBoardScreen'.
+                            color: Theme.of(context).colorScheme.surface,
+
+lib/features/ucn/ucnsubscreens/new_meeting_screen.dart:281:128: Error: Not a constant expression.
+                      ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.surface))
+
+lib/features/ucn/ucnsubscreens/passleadscreen.dart:317:110: Error: Not a constant expression.
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2))
+
+lib/features/ucn/ucnsubscreens/score_card_screen.dart:62:45: Error: Not a constant expression.
+                            color: Theme.of(context).colorScheme.onSurface,
+lib/features/ucn/ucnsubscreens/score_card_screen.dart:159:41: Error: Not a constant expression.
+                        color: Theme.of(context).colorScheme.onSurface,
+
+lib/features/ucn/ucnsubscreens/sector_dashboard_screen.dart:52:39: Error: Not a constant expression.
+                      color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/sector_dashboard_screen.dart:202:25: Error: The getter 'context' isn't defined for the type 'SectorDashboardScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/sector_dashboard_screen.dart:207:29: Error: The getter 'context' isn't defined for the type 'SectorDashboardScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/ucn/ucnsubscreens/sector_join_review_screen.dart:192:31: Error: The getter 'context' isn't defined for the type 'SectorJoinReviewScreen'.
+              color: Theme.of(context).colorScheme.surface,
+
+lib/features/ucn/ucnsubscreens/sector_team_screen.dart:43:39: Error: Not a constant expression.
+                      color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/sector_team_screen.dart:52:39: Error: Not a constant expression.
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+lib/features/ucn/ucnsubscreens/sector_team_screen.dart:199:25: Error: The getter 'context' isn't defined for the type 'SectorTeamScreen'.
+        color: Theme.of(context).colorScheme.surface,
+lib/features/ucn/ucnsubscreens/sector_team_screen.dart:204:29: Error: The getter 'context' isn't defined for the type 'SectorTeamScreen'.
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.02),
+
+lib/features/ward/presentation/area_chart_screen.dart:255:56: Error: Not a constant expression.
+        iconTheme: const IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+
+lib/features/auth/presentation/login_screen.dart:196:126: Error: Not a constant expression.
+                    ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.surface))
+
+lib/features/home/presentation/main_screen.dart:480:56: Error: Not a constant expression.
+        iconTheme: const IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+
+lib/features/auth/presentation/signup_screen.dart:838:94: Error: Not a constant expression.
+                                            child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2),
+
+lib/features/home/presentation/home_screen.dart:266:63: Error: Not a constant expression.
+                                        color: const Theme.of(context).colorScheme.surfaceContainer,
+lib/features/home/presentation/home_screen.dart:799:39: Error: Not a constant expression.
+      backgroundColor: const Theme.of(context).colorScheme.surface,
+
+lib/features/ward/presentation/ward_screen.dart:1522:82: Error: Not a constant expression.
+                                child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2),
+
+lib/features/profile/presentation/profile_screen.dart:256:116: Error: Not a constant expression.
+                          ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.surface, strokeWidth: 2))
